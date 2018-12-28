@@ -91,9 +91,9 @@ namespace LearnAsyncAwait1
         internal async Task<bool> LongRunningCancellableOperation(int duration_ms, CancellationToken cancellationToken)
         {
             bool retVal = false;
-            Task<bool> task = null;
+            //Task<bool> task = null;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 Console.WriteLine($"LongRunningCancellableOperation starting will work for {duration_ms} ms");
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -104,6 +104,8 @@ namespace LearnAsyncAwait1
                         //throw new TaskCanceledException(task);
                         break;
                     }
+                    await Task.Delay(300);
+
                     //Console.SetCursorPosition(0, Console.CursorTop);
                     Console.WriteLine($"watch.ElapsedMilliseconds = {watch.ElapsedMilliseconds} ms");
                     Console.CursorTop--;
